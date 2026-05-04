@@ -25,6 +25,7 @@ $AUTO_LOGIN = $false
 $HIDE_ON_START = $true
 $DISABLE_AUTO_UPDATE = $false
 $ALLOW_MULTIORG = $false
+$ST_OVER_443 = $false
 
 # User Information for Device Certificate
 $MULTI_USER = $true
@@ -129,6 +130,7 @@ function create_config() {
         mdm_hide_on_start = $HIDE_ON_START
         mdm_disable_auto_update = $DISABLE_AUTO_UPDATE
         mdm_multi_org = $ALLOW_MULTIORG
+        mdm_st_over_443 = $ST_OVER_443
     } | ConvertTo-Json
 
     New-Item -Path $global_profile_dir -Name $sonicwall_cse_dir_name -ItemType "directory" -Force | Out-Null

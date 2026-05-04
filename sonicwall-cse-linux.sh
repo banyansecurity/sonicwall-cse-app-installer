@@ -25,6 +25,7 @@ AUTO_LOGIN=false
 HIDE_ON_START=false
 DISABLE_AUTO_UPDATE=false
 ALLOW_MULTIORG=false
+ST_OVER_443=false
 
 # Device Certificate will be installed when user registers device
 
@@ -87,7 +88,8 @@ function create_config() {
         "mdm_auto_login": '"${AUTO_LOGIN}"',
         "mdm_hide_on_start": '"${HIDE_ON_START}"',
         "mdm_disable_auto_update": '"${DISABLE_AUTO_UPDATE}"',
-        "mdm_multi_org": '"${ALLOW_MULTIORG}"'
+        "mdm_multi_org": '"${ALLOW_MULTIORG}"',
+        "mdm_st_over_443": '"${ST_OVER_443}"'
     }'
 
     echo "$mdm_config_json" > "${global_config_file}"

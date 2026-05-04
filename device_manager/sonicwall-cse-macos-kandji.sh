@@ -25,6 +25,7 @@ AUTO_LOGIN=false
 HIDE_ON_START=true
 DISABLE_AUTO_UPDATE=false
 ALLOW_MULTIORG=false
+ST_OVER_443=false
 
 # User Information for Device Certificate
 MULTI_USER=false
@@ -105,7 +106,8 @@ function create_config() {
         "mdm_start_at_boot": '"${START_AT_BOOT}"',
         "mdm_hide_on_start": '"${HIDE_ON_START}"',
         "mdm_disable_auto_update": '"${DISABLE_AUTO_UPDATE}"',
-        "mdm_multi_org": '"${ALLOW_MULTIORG}"'
+        "mdm_multi_org": '"${ALLOW_MULTIORG}"',
+        "mdm_st_over_443": '"${ST_OVER_443}"'
     }'
 
     echo "$mdm_config_json" > "${global_config_file}"
