@@ -54,7 +54,7 @@ if (!$APP_VERSION) {
     Write-Host "Checking for latest version of app"
     $resp = Invoke-WebRequest -Uri "https://www.banyanops.com/app/windows/v3/latest" -MaximumRedirection 0 -ErrorAction SilentlyContinue -UseBasicParsing
     $loc = $resp.Headers.Location
-    if ($loc -match 'sonicwallcse-([0-9]+\.[0-9]+\.[0-9]+)\.exe') {
+    if ($loc -match 'sonicwallcse-([0-9]+\.[0-9]+\.[0-9]+)(-x64)?\.exe') {
         $APP_VERSION = $matches[1].Trim()
     }
 }
@@ -137,7 +137,13 @@ function download_install() {
     $dl_file = $tmp_dir + "\" + "sonicwallcse-$APP_VERSION.exe"
 
     $progressPreference = 'silentlyContinue'
-    Invoke-Webrequest "https://www.banyanops.com/app/releases/sonicwallcse-$APP_VERSION.exe" -outfile $dl_file -UseBasicParsing
+    try {
+        Invoke-Webrequest "https://www.banyanops.com/app/releases/sonicwallcse-$APP_VERSION-x64.exe" -outfile $dl_file -UseBasicParsing -ErrorAction Stop
+    }
+    catch {
+        Write-Host "sonicwallcse-$APP_VERSION-x64.exe not found, trying sonicwallcse-$APP_VERSION.exe"
+        Invoke-Webrequest "https://www.banyanops.com/app/releases/sonicwallcse-$APP_VERSION.exe" -outfile $dl_file -UseBasicParsing
+    }
     $progressPreference = 'Continue'
 
     Write-Host "Run installer"
