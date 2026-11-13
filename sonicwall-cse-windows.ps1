@@ -149,13 +149,8 @@ function download_install() {
     $dl_file = $tmp_dir + "\" + "sonicwallcse-$APP_VERSION.exe"
 
     $progressPreference = 'silentlyContinue'
-    try {
-        Invoke-Webrequest "https://www.banyanops.com/app/releases/sonicwallcse-$APP_VERSION-x64.exe" -outfile $dl_file -UseBasicParsing -ErrorAction Stop
-    }
-    catch {
-        Write-Host "sonicwallcse-$APP_VERSION-x64.exe not found, trying sonicwallcse-$APP_VERSION.exe"
-        Invoke-Webrequest "https://www.banyanops.com/app/releases/sonicwallcse-$APP_VERSION.exe" -outfile $dl_file -UseBasicParsing
-    }
+    $suffix = if ([version]$APP_VERSION -ge [version]"4.8.0") { "-x64" } else { "" }
+    Invoke-Webrequest "https://www.banyanops.com/app/releases/sonicwallcse-$APP_VERSION$suffix.exe" -outfile $dl_file -UseBasicParsing
     $progressPreference = 'Continue'
 
     Write-Host "Run installer"
