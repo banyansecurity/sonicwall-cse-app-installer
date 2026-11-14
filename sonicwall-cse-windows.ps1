@@ -64,7 +64,7 @@ if (!$APP_VERSION) {
 
     if ($resp) {
         $loc = $resp.Headers.Location
-        if ($loc -match 'sonicwallcse-([0-9]+\.[0-9]+\.[0-9]+)\.exe') {
+        if ($loc -match 'sonicwallcse-([0-9]+\.[0-9]+\.[0-9]+)(-x64)?\.exe') {
             $APP_VERSION = $matches[1].Trim()
         }
     }
@@ -149,7 +149,8 @@ function download_install() {
     $dl_file = $tmp_dir + "\" + "sonicwallcse-$APP_VERSION.exe"
 
     $progressPreference = 'silentlyContinue'
-    Invoke-Webrequest "https://www.banyanops.com/app/releases/sonicwallcse-$APP_VERSION.exe" -outfile $dl_file -UseBasicParsing
+    $suffix = if ([version]$APP_VERSION -ge [version]"4.8.0") { "-x64" } else { "" }
+    Invoke-Webrequest "https://www.banyanops.com/app/releases/sonicwallcse-$APP_VERSION$suffix.exe" -outfile $dl_file -UseBasicParsing
     $progressPreference = 'Continue'
 
     Write-Host "Run installer"
